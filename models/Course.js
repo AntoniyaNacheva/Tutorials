@@ -35,6 +35,10 @@ const courseSchema = new Schema({
 		ref: 'User',
 		default: []
 	},
+	owner: {
+		type: Types.ObjectId,
+		ref: 'User'
+	}
 });
 
 courseSchema.index({ title: 1 }, {

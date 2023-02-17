@@ -1,11 +1,22 @@
 const { parseError } = require('../util/parser');
-const { createCourse } = require('../services/courseService');
+const { createCourse, getById } = require('../services/courseService');
 
 const courseController = require('express').Router();
 
 courseController.get('/create', (req, res) => {
 	res.render('create', {
 		title: 'Create Course'
+	});
+});
+
+courseController.get('/:id', async (req, res) => {
+	const course = await getById(req.params.id);
+
+	course.isOwner = course.owner.toString() == req.user._id.toString();
+
+	res.render('details', {
+		title: course.title,
+		course
 	});
 });
 

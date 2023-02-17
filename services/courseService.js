@@ -1,8 +1,17 @@
 const Course = require('../models/Course');
 
+async function getAllByDate(search) {
+	const query = {};
+	if (search) {
+		query.title = new RegExp(search, 'i');
+	}
+	return Course.find( query ).sort({ createdAt: 1 }).lean();
 
-async function getAllByDate() {
-	return Course.find({}).sort({ createdAt: 1 }).lean();
+	// if(search) {
+	// 	return Course.find({title: search}).collation({locale: 'en', strength: 2}).sort({ createdAt: 1 }).lean();
+	// } else {
+	// 	return Course.find({}).sort({ createdAt: 1 }).lean();
+	// }
 }
 
 async function getRecent() {
